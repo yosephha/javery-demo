@@ -1,7 +1,7 @@
 $j(function() {
     var todos = [
     {
-        task: 'do jQuery tutorial',
+        task: 'do javery tutorial',
         isCompleted: false
     },
     {
@@ -12,6 +12,7 @@ $j(function() {
 
     var app = {
         showTodos: function() {
+            $j('#todos-list').empty();
             var todosListEl = $j('#todos-list');
 
             todosListEl.html('');
@@ -20,7 +21,7 @@ $j(function() {
                 var taskClasses = 'todo-task' + (todo.isCompleted ? ' is-completed' : '');
 
                 todosListEl.append('\
-                <tr>\
+                <tr class="table-row">\
                     <td class="' + taskClasses + '">' + todo.task + '</td>\
                     <td>\
                         <button class="edit-button">Edit</button>\
@@ -37,7 +38,8 @@ $j(function() {
             event.preventDefault();
 
             var createInput = $j('#create-input');
-            var createInputValue = createInput.val();
+
+            var createInputValue = createInput.elements[0].value
 
             var errorMessage = null;
 
@@ -61,13 +63,13 @@ $j(function() {
                 isCompleted: false
             });
 
-            createInput.val('');
+            createInput.elements[0].value = "";
              app.showTodos();
         },
 
         toggleTodo: function() {
             todos.forEach(function(todo) {
-                if (todo.task === $(this).text()) {
+                if (todo.task === $j(this).elements[0].textContent) {
                     todo.isCompleted = !todo.isCompleted;
                 }
             }.bind(this));
@@ -102,7 +104,7 @@ $j(function() {
         },
 
         saveTask: function() {
-            var newTask = $j('.edit-input').val();
+            var newTask = $j('.edit-input').elements[0].value;
 
             todos.forEach(function(todo) {
                 if (app.currentTask === todo.task) {
@@ -114,7 +116,7 @@ $j(function() {
         },
 
         deleteTask: function() {
-            var taskToDelete = $j(this).parent('td').prev().text();
+            var taskToDelete = $j(this).parent('td').elements[0].previousElementSibling.textContent
             var found = false;
             todos.forEach(function(todo, index) {
                 if (!found && taskToDelete === todo.task) {
@@ -126,7 +128,7 @@ $j(function() {
         },
 
         showError: function(errorMessage) {
-            $j('.error-message').html(errorMessage).slideDown();
+            $j('.error-message').html(errorMessage);
         },
 
         clearError: function() {
@@ -142,9 +144,8 @@ $j(function() {
 
     app.showTodos();
 
-    // $('.todo-task').on('click', app.toggleTodo);
-    $('#create-form').on('submit', app.addTodo);
-    $('#create-input').on('keyup', app.clearError);
+    $j('#create-form').on('submit', app.addTodo);
+    $j('#create-input').on('keyup', app.clearError);
     $('table').on('click', '.todo-task', app.toggleTodo);
     $('table').on('click', '.edit-button', app.enterEditMode);
     $('table').on('click', '.cancel-button', app.exitEditMode);

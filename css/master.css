@@ -21,3 +21,39 @@
     display: none;
     width: 180px;
 }
+
+div#app-container {
+    width: 75%;
+    margin: auto;
+    text-align: -webkit-center;
+}
+
+input#create-input {
+    width: 80%;
+    height: 40px;
+    font-size: 20px;
+}
+
+#create-form > button {
+  background: #0dd80d;
+  color: white;
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 18px;
+  margin: 0px 12px;
+}
+
+table {
+    width: 83%;
+    margin: auto;
+    text-align: center;
+    margin: 35px;
+    font-size: 22px;
+}
+
+.table-row {
+  border: 1px solid #333;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 18px;
+}
